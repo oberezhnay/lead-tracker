@@ -84,11 +84,13 @@ Example file: `frontend/.env.example`
 
 ```env
 NEXT_PUBLIC_API_URL=http://localhost:3000
+INTERNAL_API_URL=http://localhost:3000
 ```
 
 Keys:
 
-- `NEXT_PUBLIC_API_URL` - public API base URL used by the Next.js app.
+- `NEXT_PUBLIC_API_URL` - public API base URL used by browser-side requests.
+- `INTERNAL_API_URL` - API base URL used by server-side Next.js requests. Use `http://localhost:3000` locally and `http://backend:3000` inside Docker.
 
 ## API Check
 
@@ -180,4 +182,3 @@ npm start
 cd docker
 docker compose up --build -d
 ```
-

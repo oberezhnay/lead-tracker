@@ -15,9 +15,10 @@ function normalizeSearchParams(params: any) {
 async function  getLeads(params: any) {
   const safeParams = normalizeSearchParams(params);
   const query = new URLSearchParams(safeParams).toString();
+  const base_Url = process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL;
   
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/leads?${query}`, {cache: 'no-store'});
+    const res = await fetch(`${base_Url}/api/leads?${query}`, {cache: 'no-store'});
 
     if (!res.ok) {
       throw new Error('Failed to fetch leads');

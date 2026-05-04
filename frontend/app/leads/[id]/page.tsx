@@ -9,7 +9,9 @@ interface LeadPageProps {
 }
 
 async function getLead(id: string) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/leads/${id}`, { cache: 'no-store' });
+  const baseUrl = process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL;
+  const res = await fetch(`${baseUrl}/api/leads/${id}`, { cache: 'no-store' });
+
   if (!res.ok) {
     throw new Error('Failed to fetch lead');
   }
@@ -24,6 +26,7 @@ export default async function LeadPage({ params }: LeadPageProps) {
   async function updateLead(formData: FormData) {
     "use server";
 
+    const baseUrl = process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL;
     const body = { 
       name: formData.get('name'),
       email: formData.get('email'),
@@ -33,7 +36,7 @@ export default async function LeadPage({ params }: LeadPageProps) {
       notes: formData.get('notes'),
     };
 
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/leads/${id}`, {
+    await fetch(`${baseUrl}/api/leads/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body)
@@ -45,7 +48,9 @@ export default async function LeadPage({ params }: LeadPageProps) {
   async function deleteLead() {
     "use server";
 
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/leads/${id}`, {
+    const baseUrl = process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL;
+
+    await fetch(`${baseUrl}/api/leads/${id}`, {
       method: "DELETE"
     });
     redirect("/leads");
